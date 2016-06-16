@@ -10,6 +10,14 @@ const byId = (state = { }, action) => {
         ...state,
         [action.id]: todo(state[action.id], action)
       };
+    case 'SET_TODOS':
+      state = { };
+
+      action.todos.forEach(t => {
+        state[t.id] = t;
+      });
+
+      return state;
     default:
       return state;
   }
@@ -19,6 +27,8 @@ const allIds = (state = [], action) => {
   switch (action.type) {
     case 'ADD_TODO':
       return [...state, action.id];
+    case 'SET_TODOS':
+      return action.todos.map(t => t.id);
     default:
       return state;
   }

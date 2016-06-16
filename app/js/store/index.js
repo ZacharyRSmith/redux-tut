@@ -18,13 +18,24 @@ const addLoggingToDispatch = (store) => {
   };
 };
 
+const addPromiseSupportToDispatch = (store) => {
+  const rawDispatch = store.dispatch;
+
+  return (action) => ( typeof action.then === 'function'
+    ? action.then(rawDispatch)
+    : rawDispatch(action)
+  );
+};
+
 // this allows us to create multiple instances, good for testing.
 const configureStore = () => {
   const store = createStore(todoApp);
 
+  // order matters
   if (process.env.NODE_ENV !== 'production') {
     store.dispatch = addLoggingToDispatch(store);
   }
+  store.dispatch = addPromiseSupportToDispatch(store);
 
   return store;
 };
