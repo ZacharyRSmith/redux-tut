@@ -4,10 +4,10 @@ import AddTodo from './AddTodo.jsx';
 import TodoList from './TodoList.jsx';
 import Footer from './Footer.jsx';
 
-const TodoApp = ({ params }) => (
+const TodoApp = () => (
   <div>
     <AddTodo />
-    <TodoList filter={params.filter || 'all'} />
+    <TodoList />
     <Footer />
   </div>
 );
