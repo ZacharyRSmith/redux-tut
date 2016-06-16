@@ -3,6 +3,7 @@ import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 
 import { toggleTodo } from '../actions';
+import { getVisibleTodos } from '../reducers';
 
 const Todo = ({
   onClick,
@@ -42,26 +43,8 @@ const TodoList = ({
   </ul>
 );
 
-const getVisibleTodos = (
-  todos,
-  filter
-) => {
-  switch (filter) {
-    case 'all':
-      return todos;
-    case 'completed':
-      return todos.filter(
-          t => t.completed
-      );
-    case 'active':
-      return todos.filter(
-          t => !t.completed
-      );
-  }
-}
-
 const mapStateToProps = (state, { params }) => ({
-  todos: getVisibleTodos(state.todos, params.filter || 'all')
+  todos: getVisibleTodos(state, params.filter || 'all')
 });
 
 export default withRouter(connect(

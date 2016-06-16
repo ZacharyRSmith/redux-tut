@@ -1,47 +1,8 @@
-import { createStore, combineReducers } from 'redux';
+import { createStore } from 'redux';
 import throttle from 'lodash/throttle';
 
 import { loadState, saveState } from './localStorage';
-
-const todo = (state, action) => {
-  switch (action.type) {
-    case 'ADD_TODO':
-      return {
-        id: action.id,
-        text: action.text,
-        completed: false
-      };
-    case 'TOGGLE_TODO':
-      if (state.id !== action.id) {
-        return state;
-      }
-
-      return {
-        ...state,
-        completed: !state.completed
-      };
-    default:
-      return state;
-  }
-};
-
-const todos = (state = [], action) => {
-  switch (action.type) {
-    case 'ADD_TODO':
-      return [
-        ...state,
-        todo(undefined, action)
-      ];
-    case 'TOGGLE_TODO':
-      return state.map(t =>
-          todo(t, action)
-      );
-    default:
-      return state;
-  }
-};
-
-const todoApp = combineReducers({ todos });
+import todoApp from '../reducers';
 
 // this allows us to create multiple instances, good for testing.
 const configureStore = () => {
