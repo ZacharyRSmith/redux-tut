@@ -1,5 +1,7 @@
 import { createStore, combineReducers } from 'redux';
 
+import { loadState } from './localStorage';
+
 const todo = (state, action) => {
   switch (action.type) {
     case 'ADD_TODO':
@@ -55,4 +57,5 @@ const todoApp = combineReducers({
   visibilityFilter
 });
 
-export default createStore(todoApp);
+const persistedState = loadState();
+export default createStore(todoApp, persistedState);
