@@ -1,22 +1,13 @@
 import { Provider } from 'react-redux';
 import React from 'react';
 
-import AddTodo from './AddTodo.jsx';
-import TodoList from './TodoList.jsx';
-import Footer from './Footer.jsx';
 import { configureStore } from '../store';
+import { TodoApp } from './TodoApp.jsx';
 
-
-const TodoApp = () => (
-  <div>
-    <AddTodo />
-    <TodoList />
-    <Footer />
-  </div>
-);
-
-export default (
+const Root = ({ store }) => (
   <Provider store={configureStore()}>
     <TodoApp />
   </Provider>
 );
+
+export default Root;

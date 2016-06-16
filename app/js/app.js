@@ -1,8 +1,12 @@
-import ReactDOM from 'react-dom';
+import React from 'react';
+import { render } from 'react-dom';
 
 import AppRoot from './components/AppRoot.jsx';
+import { configureStore } from './store';
 
-ReactDOM.render(
-  AppRoot,
+const store = configureStore();
+
+render(
+  <AppRoot store={store} />,
   document.getElementById('app-root')
 );
