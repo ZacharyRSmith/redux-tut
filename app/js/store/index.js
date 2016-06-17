@@ -1,5 +1,6 @@
-import { createStore } from 'redux';
-import throttle from 'lodash/throttle';
+import { createStore, applyMiddleware } from 'redux';
+import promise from 'redux-promise';
+import createLogger from 'redux-logger';
 
 import todoApp from '../reducers';
 
@@ -17,30 +18,21 @@ const logger = (store) => (next) => {
   };
 };
 
-const promise = (store) => (next) => {
-  return (action) => ( typeof action.then === 'function'
+const promise = (store) => (next) => (action) =>
+  ( typeof action.then === 'function'
     ? action.then(next)
     : next(action)
   );
-};
-
-const wrapDispatch = (store, middlewares) => {
-  middlewares.slice().reverse().forEach(m => {
-    store.dispatch = m(store)(store.dispatch);
-  });
-};
 
 // this allows us to create multiple instances, good for testing.
 const configureStore = () => {
-  const store = createStore(todoApp);
   // order of middlewares matters
   const middlewares = [promise];
   if (process.env.NODE_ENV !== 'production') {
-    middlewares.push(logger);
+    middlewares.push(createLogger());
   }
-  wrapDispatch(store, middlewares);
 
-  return store;
+  return createStore(todoApp, applyMiddleware(...middlewares));
 };
 
 export { configureStore };
