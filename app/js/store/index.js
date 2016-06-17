@@ -3,39 +3,42 @@ import throttle from 'lodash/throttle';
 
 import todoApp from '../reducers';
 
-const addLoggingToDispatch = (store) => {
-  const rawDispatch = store.dispatch;
-  if (!console.group) return rawDispatch;
+const logger = (store) => (next) => {
+  if (!console.group) return next;
 
   return (action) => {
     console.group(action.type);
     console.log('%c prev state', 'color: gray', store.getState());
     console.log('%c action', 'color: blue', action);
-    const res = rawDispatch(action);
+    const res = next(action);
     console.log('%c next state', 'color: green', store.getState());
     console.groupEnd(action.type);
     return res;
   };
 };
 
-const addPromiseSupportToDispatch = (store) => {
-  const rawDispatch = store.dispatch;
-
+const promise = (store) => (next) => {
   return (action) => ( typeof action.then === 'function'
-    ? action.then(rawDispatch)
-    : rawDispatch(action)
+    ? action.then(next)
+    : next(action)
   );
+};
+
+const wrapDispatch = (store, middlewares) => {
+  middlewares.slice().reverse().forEach(m => {
+    store.dispatch = m(store)(store.dispatch);
+  });
 };
 
 // this allows us to create multiple instances, good for testing.
 const configureStore = () => {
   const store = createStore(todoApp);
-
-  // order matters
+  // order of middlewares matters
+  const middlewares = [promise];
   if (process.env.NODE_ENV !== 'production') {
-    store.dispatch = addLoggingToDispatch(store);
+    middlewares.push(logger);
   }
-  store.dispatch = addPromiseSupportToDispatch(store);
+  wrapDispatch(store, middlewares);
 
   return store;
 };
