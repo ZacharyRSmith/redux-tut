@@ -2,7 +2,7 @@ import { v4 } from 'node-uuid';
 
 import * as api from '../api';
 
-export const requestTodos = (filter) => ({
+const requestTodos = (filter) => ({
   type: 'REQUEST_TODOS',
   filter,
 })
@@ -19,10 +19,13 @@ const receiveTodos = (filter, response) => ({
   response,
 });
 
-export const fetchTodos = (filter) =>
+export const fetchTodos = (filter) => (dispatch) => {
+  dispatch(requestTodos(filter));
+
   api.fetchTodos(filter).then(res =>
-    receiveTodos(filter, res)
+    dispatch(receiveTodos(filter, res));
   );
+};
 
 export const toggleTodo = (id) => ({
   type: 'TOGGLE_TODO',
