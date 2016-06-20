@@ -1,5 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
+import { Router, Route, browserHistory } from 'react-router';
 
 // habits
 import AddHabit from './AddHabit.jsx';
@@ -21,24 +22,36 @@ const HabitApp = () => (
   </div>
 );
 
-const TodoApp = () => (
-  <div>
-    <h1>todo</h1>
-    <AddTodo />
-    <TodoList />
-    <TodoFooter />
-  </div>
-);
+const TodoApp = ({ params }) => {
+  const filter = params.filter || 'all';
 
-const RootApp = () => (
+  return (
+    <div>
+      <h1>todo</h1>
+      <AddTodo />
+      <TodoList
+        filter={filter}
+      />
+      <TodoFooter
+        filter={filter}
+      />
+    </div>
+  );
+}
+
+const RootApp = ({ params }) => (
   <div>
-    <TodoApp />
+    <TodoApp
+      params={params}
+    />
     <HabitApp />
   </div>
 );
 
 export default (
   <Provider store={store}>
-    <RootApp />
+    <Router history={browserHistory}>
+      <Route path="/(:filter)" component={RootApp} />
+    </Router>
   </Provider>
 );
