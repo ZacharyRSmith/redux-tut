@@ -1,68 +1,23 @@
-import { createStore, combineReducers } from 'redux';
+import { applyMiddleware, createStore } from 'redux';
+import createLogger from 'redux-logger';
 import throttle from 'lodash/throttle';
 
 import { loadState, saveState } from './localStorage';
+import app from '../reducers';
 
-const todo = (state, action) => {
-  switch (action.type) {
-    case 'ADD_TODO':
-      return {
-        id: action.id,
-        text: action.text,
-        completed: false
-      };
-    case 'TOGGLE_TODO':
-      if (state.id !== action.id) {
-        return state;
-      }
-
-      return {
-        ...state,
-        completed: !state.completed
-      };
-    default:
-      return state;
+const configureStore = () => {
+  const persistedState = loadState();
+  let middlewares = [];
+  if (process.env.NODE_ENV !== 'production') {
+    middlewares.push(createLogger());
   }
+  const store = createStore(app, persistedState, applyMiddleware(...middlewares));
+
+  store.subscribe(throttle(() => {
+    saveState({ todos: store.getState().todos });
+  }, 1000));
+
+  return store;
 };
 
-const todos = (state = [], action) => {
-  switch (action.type) {
-    case 'ADD_TODO':
-      return [
-        ...state,
-        todo(undefined, action)
-      ];
-    case 'TOGGLE_TODO':
-      return state.map(t =>
-          todo(t, action)
-      );
-    default:
-      return state;
-  }
-};
-
-const visibilityFilter = (
-  state = 'SHOW_ALL',
-  action
-) => {
-  switch (action.type) {
-    case 'SET_VISIBILITY_FILTER':
-      return action.filter;
-    default:
-      return state;
-  }
-};
-
-const todoApp = combineReducers({
-  todos,
-  visibilityFilter
-});
-
-const persistedState = loadState();
-const store = createStore(todoApp, persistedState);
-
-store.subscribe(throttle(() => {
-  saveState({ todos: store.getState().todos });
-}, 1000));
-
-export default store;
+export { configureStore };
