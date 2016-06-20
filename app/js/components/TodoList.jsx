@@ -29,17 +29,20 @@ const Todo = ({
 const TodoList = ({
   todos,
   onTodoClick
-  }) => (
-  <ul>
-    {todos.map(todo =>
-        <Todo
-          key={todo.id}
-          {...todo}
-          onClick={() => onTodoClick(todo.id)}
-          />
-    )}
-  </ul>
-);
+}) => {
+  return ( todos.length
+    ? <ul>
+        {todos.map(todo =>
+            <Todo
+              key={todo.id}
+              {...todo}
+              onClick={() => onTodoClick(todo.id)}
+              />
+        )}
+      </ul>
+    : <ul></ul>
+  );
+};
 
 const getVisibleTodos = (
   todos,

@@ -1,4 +1,7 @@
 import { createStore, combineReducers } from 'redux';
+import throttle from 'lodash/throttle';
+
+import { loadState, saveState } from './localStorage';
 
 const todo = (state, action) => {
   switch (action.type) {
@@ -55,4 +58,11 @@ const todoApp = combineReducers({
   visibilityFilter
 });
 
-export default createStore(todoApp)
+const persistedState = loadState();
+const store = createStore(todoApp, persistedState);
+
+store.subscribe(throttle(() => {
+  saveState({ todos: store.getState().todos });
+}, 1000));
+
+export default store;
