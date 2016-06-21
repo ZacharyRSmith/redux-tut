@@ -12,6 +12,12 @@ export const addTodo = (text) => ({
   text
 });
 
+export const addTodoList = (name) => ({
+  type: 'ADD_TODO_LIST',
+  id: v4(),
+  name
+});
+
 export const toggleTodo = (id) => ({
   type: 'TOGGLE_TODO',
   id

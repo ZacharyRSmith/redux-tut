@@ -2,13 +2,7 @@ import { combineReducers } from 'redux';
 
 import habits from './habits';
 import todos from './todos';
-
-const todoLists = (state = [], action) => {
-  switch (action.type) {
-    default:
-      return state;
-  }
-};
+import todoLists from './todoLists';
 
 const app = combineReducers({
   // todos

@@ -7,6 +7,7 @@ import AddHabit from './AddHabit.jsx';
 import HabitList from './HabitList.jsx';
 // todos
 import AddTodo from './AddTodo.jsx';
+import AddTodoList from './AddTodoList.jsx';
 import TodoList from './TodoList.jsx';
 import TodoFooter from './TodoFooter.jsx';
 
@@ -42,10 +43,11 @@ let TodoApp = ({ params, todoLists }) => {
   return (
     <div>
       <h1>Todo Lists</h1>
-
+      <AddTodoList />
       {( todoLists.length
-        ? todoLists.map(l =>
+        ? todoLists.map((l, i) =>
           <TodoListApp
+            key={i}
             params={params}
           />
         )
