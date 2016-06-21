@@ -1,5 +1,5 @@
 import React from 'react';
-import { Provider } from 'react-redux';
+import { Provider, connect } from 'react-redux';
 import { Router, Route, hashHistory } from 'react-router';
 
 // habits
@@ -16,18 +16,17 @@ const store = configureStore();
 
 const HabitApp = () => (
   <div>
-    <h1>habit</h1>
+    <h1>habits</h1>
     <AddHabit />
     <HabitList />
   </div>
 );
 
-const TodoApp = ({ params }) => {
+const TodoListApp = ({ params }) => {
   const filter = params.filter || 'all';
 
   return (
     <div>
-      <h1>todo</h1>
       <AddTodo />
       <TodoList
         filter={filter}
@@ -37,7 +36,34 @@ const TodoApp = ({ params }) => {
       />
     </div>
   );
-}
+};
+
+let TodoApp = ({ params, todoLists }) => {
+  return (
+    <div>
+      <h1>Todo Lists</h1>
+
+      {( todoLists.length
+        ? todoLists.map(l =>
+          <TodoListApp
+            params={params}
+          />
+        )
+        : <div>No lists found!</div>
+      )}
+    </div>
+  );
+};
+
+const mapStateToProps = (state) => ({
+  todoLists: state.todoLists
+});
+
+TodoApp = connect(
+  mapStateToProps,
+  null
+)(TodoApp);
+
 
 const RootApp = ({ params }) => (
   <div>
