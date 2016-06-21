@@ -1,26 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import AddTodo from './AddTodo.jsx';
 import AddTodoList from './AddTodoList.jsx';
-import TodoList from './TodoList.jsx';
-import TodoFooter from './TodoFooter.jsx';
-
-const TodoListApp = ({ params }) => {
-  const filter = params.filter || 'all';
-
-  return (
-    <div>
-      <AddTodo />
-      <TodoList
-        filter={filter}
-      />
-      <TodoFooter
-        filter={filter}
-      />
-    </div>
-  );
-};
+import TodoListApp from './TodoListApp.jsx';
 
 let TodoApp = ({ params, todoLists }) => {
   return (
@@ -31,6 +13,7 @@ let TodoApp = ({ params, todoLists }) => {
         ? todoLists.map((l, i) =>
           <TodoListApp
             key={i}
+            name={l.name}
             params={params}
           />
         )
