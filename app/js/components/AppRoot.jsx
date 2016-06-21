@@ -7,11 +7,9 @@ import { configureStore } from '../store';
 
 const store = configureStore();
 
-const RootApp = ({ params }) => (
+const RootApp = () => (
   <div>
-    <TodoApp
-      params={params}
-    />
+    <TodoApp />
   </div>
 );
 

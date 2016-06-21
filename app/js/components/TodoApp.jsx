@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 
 import AddTodoList from './AddTodoList.jsx';
 import TodoFooter from './TodoFooter.jsx';
 import TodoListApp from './TodoListApp.jsx';
 
-let TodoApp = ({ params, todoLists }) => {
-  const filter = params.filter || 'all';
+let TodoApp = ({ filter, todoLists }) => {
 
   return (
     <div>
@@ -15,27 +15,26 @@ let TodoApp = ({ params, todoLists }) => {
       {( todoLists.length
         ? todoLists.map((l, i) => (
           <TodoListApp
+            filter={filter}
             key={l.id}
             id={l.id}
             name={l.name}
-            params={params}
             todos={l.todos}
           />
         ))
         : <div>No lists found!</div>
       )}
-      <TodoFooter
-        filter={filter}
-      />
+      <TodoFooter filter={filter} />
     </div>
   );
 };
 
-const mapStateToProps = (state) => ({
-  todoLists: state.todoLists
+const mapStateToProps = (state, { params }) => ({
+  todoLists: state.todoLists,
+  filter: params.filter || 'all'
 });
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   null
-)(TodoApp);
+)(TodoApp));

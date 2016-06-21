@@ -6,8 +6,7 @@ import TodoList from './TodoList.jsx';
 import { addTodo } from '../actions';
 
 // FIXME too many params!
-const TodoListApp = ({ dispatch, id, name, params, todos }) => {
-  const filter = params.filter || 'all';
+const TodoListApp = ({ dispatch, filter, id, name, todos }) => {
 
   return (
     <div>
