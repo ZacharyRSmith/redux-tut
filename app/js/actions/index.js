@@ -6,9 +6,10 @@ export const addHabit = (text) => ({
   text
 });
 
-export const addTodo = (text) => ({
+export const addTodo = (text, listId) => ({
   type: 'ADD_TODO',
   id: v4(),
+  listId,
   text
 });
 

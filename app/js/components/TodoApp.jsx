@@ -5,18 +5,21 @@ import AddTodoList from './AddTodoList.jsx';
 import TodoListApp from './TodoListApp.jsx';
 
 let TodoApp = ({ params, todoLists }) => {
+  // TODO refactor
   return (
     <div>
       <h1>Todo Lists</h1>
       <AddTodoList />
       {( todoLists.length
-        ? todoLists.map((l, i) =>
+        ? todoLists.map((l, i) => (
           <TodoListApp
-            key={i}
+            key={l.id}
+            id={l.id}
             name={l.name}
             params={params}
+            todos={l.todos}
           />
-        )
+        ))
         : <div>No lists found!</div>
       )}
     </div>

@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 
 import { addTodo } from '../actions';
 
-let AddTodo = ({ dispatch }) => {
+// move listId knowledge to parent component
+let AddTodo = ({ dispatch, listId }) => {
   let input;
 
   return (
@@ -12,7 +13,7 @@ let AddTodo = ({ dispatch }) => {
         input = node;
       }} />
       <button onClick={() => {
-        dispatch(addTodo(input.value));
+        dispatch(addTodo(input.value, listId));
         input.value = '';
       }}>
         Add Todo

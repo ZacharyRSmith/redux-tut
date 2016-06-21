@@ -69,7 +69,7 @@ const mapStateToProps = (
   ownProps
 ) => ({
   todos: getVisibleTodos(
-    state.todos,
+    ownProps.todos,
     ownProps.filter
   )
 });
