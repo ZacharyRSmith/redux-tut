@@ -1,17 +1,22 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import AddTodo from './AddTodo.jsx';
 import TodoList from './TodoList.jsx';
 import TodoFooter from './TodoFooter.jsx';
+import { addTodo } from '../actions';
 
-const TodoListApp = ({ id, name, params, todos }) => {
+// FIXME too many params!
+const TodoListApp = ({ dispatch, id, name, params, todos }) => {
   const filter = params.filter || 'all';
 
   return (
     <div>
       <h3>{name}</h3>
       <AddTodo
-        listId={id}
+        handleClick={(newTodoText) => {
+          dispatch(addTodo(newTodoText, id));
+        }}
       />
       <TodoList
         filter={filter}
@@ -24,4 +29,4 @@ const TodoListApp = ({ id, name, params, todos }) => {
   );
 };
 
-export default TodoListApp;
+export default connect()(TodoListApp);

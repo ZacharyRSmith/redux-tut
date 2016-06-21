@@ -1,10 +1,6 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
-import { addTodo } from '../actions';
-
-// move listId knowledge to parent component
-let AddTodo = ({ dispatch, listId }) => {
+let AddTodo = ({ handleClick }) => {
   let input;
 
   return (
@@ -13,7 +9,7 @@ let AddTodo = ({ dispatch, listId }) => {
         input = node;
       }} />
       <button onClick={() => {
-        dispatch(addTodo(input.value, listId));
+        handleClick(input.value);
         input.value = '';
       }}>
         Add Todo
@@ -21,4 +17,4 @@ let AddTodo = ({ dispatch, listId }) => {
     </div>
   );
 };
-export default connect()(AddTodo);
+export default AddTodo;

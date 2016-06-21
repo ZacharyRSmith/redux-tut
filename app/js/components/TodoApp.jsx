@@ -5,7 +5,6 @@ import AddTodoList from './AddTodoList.jsx';
 import TodoListApp from './TodoListApp.jsx';
 
 let TodoApp = ({ params, todoLists }) => {
-  // TODO refactor
   return (
     <div>
       <h1>Todo Lists</h1>
