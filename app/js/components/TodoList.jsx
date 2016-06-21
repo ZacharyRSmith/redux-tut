@@ -36,7 +36,7 @@ const TodoList = ({
             <Todo
               key={todo.id}
               {...todo}
-              onClick={() => onTodoClick(todo.id)}
+              onClick={() => onTodoClick(todo.id, todo.listId)}
               />
         )}
       </ul>
@@ -73,15 +73,7 @@ const mapStateToProps = (
     ownProps.filter
   )
 });
-const mapDispatchToProps = (
-  dispatch,
-  ownProps
-) => ({
-  onTodoClick: (todoId) => {
-    dispatch(toggleTodo(todoId, ownProps.id));
-  }
-});
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  { onTodoClick: toggleTodo }
 )(TodoList);
