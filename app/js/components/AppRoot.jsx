@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { Router, Route, browserHistory } from 'react-router';
+import { Router, Route, hashHistory } from 'react-router';
 
 // habits
 import AddHabit from './AddHabit.jsx';
@@ -50,7 +50,7 @@ const RootApp = ({ params }) => (
 
 export default (
   <Provider store={store}>
-    <Router history={browserHistory}>
+    <Router history={hashHistory}>
       <Route path="/(:filter)" component={RootApp} />
     </Router>
   </Provider>
