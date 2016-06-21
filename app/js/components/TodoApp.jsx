@@ -2,9 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import AddTodoList from './AddTodoList.jsx';
+import TodoFooter from './TodoFooter.jsx';
 import TodoListApp from './TodoListApp.jsx';
 
 let TodoApp = ({ params, todoLists }) => {
+  const filter = params.filter || 'all';
+
   return (
     <div>
       <h1>Todo Lists</h1>
@@ -21,6 +24,9 @@ let TodoApp = ({ params, todoLists }) => {
         ))
         : <div>No lists found!</div>
       )}
+      <TodoFooter
+        filter={filter}
+      />
     </div>
   );
 };

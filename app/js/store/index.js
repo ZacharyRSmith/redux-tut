@@ -5,14 +5,16 @@ import throttle from 'lodash/throttle';
 import { loadState, saveState } from './localStorage';
 import app from '../reducers';
 
-const configureStore = () => {
-  const persistedState = loadState();
+const getMiddlewares = () => {
   let middlewares = [];
   if (process.env.NODE_ENV !== 'production') {
     middlewares.push(createLogger());
   }
-  const store = createStore(app, persistedState, applyMiddleware(...middlewares));
 
+  return middlewares;
+};
+
+const saveStateAtIntervals = (store, interval) => {
   store.subscribe(throttle(() => {
     const { todoLists, todos } = store.getState();
 
@@ -20,8 +22,18 @@ const configureStore = () => {
       todoLists,
       todos
     });
-  }, 1000));
+  }, interval));
+};
 
+const configureStore = () => {
+  const persistedState = loadState();
+  const store = createStore(
+    app,
+    persistedState,
+    applyMiddleware(...getMiddlewares())
+  );
+
+  saveStateAtIntervals(store, 1000);
   return store;
 };
 

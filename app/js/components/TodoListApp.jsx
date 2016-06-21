@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 
 import AddTodo from './AddTodo.jsx';
 import TodoList from './TodoList.jsx';
-import TodoFooter from './TodoFooter.jsx';
 import { addTodo } from '../actions';
 
 // FIXME too many params!
@@ -22,9 +21,6 @@ const TodoListApp = ({ dispatch, id, name, params, todos }) => {
         filter={filter}
         id={id}
         todos={todos}
-      />
-      <TodoFooter
-        filter={filter}
       />
     </div>
   );
