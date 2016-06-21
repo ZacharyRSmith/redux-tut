@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { toggleTodo } from '../actions';
+import { getVisibleTodos } from '../reducers/todoLists';
 
 const Todo = ({
   onClick,
@@ -44,32 +45,12 @@ const TodoList = ({
   );
 };
 
-const getVisibleTodos = (
-  todos,
-  filter
-) => {
-  switch (filter) {
-    case 'all':
-      return todos;
-    case 'completed':
-      return todos.filter(
-          t => t.completed
-      );
-    case 'active':
-      return todos.filter(
-          t => !t.completed
-      );
-    default:
-      throw new Error(`Unknown filter: ${filter}`);
-  }
-}
-
 const mapStateToProps = (
   state,
   ownProps
 ) => ({
   todos: getVisibleTodos(
-    ownProps.todos,
+    ownProps,
     ownProps.filter
   )
 });

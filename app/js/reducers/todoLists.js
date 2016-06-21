@@ -1,4 +1,4 @@
-import todos from './todos';
+import todos, * as fromTodos from './todos';
 
 const todoList = (state, action) => {
   switch (action.type) {
@@ -41,3 +41,6 @@ const todoLists = (state = [], action) => {
 };
 
 export default todoLists;
+
+export const getVisibleTodos = (state, filter) =>
+  fromTodos.getVisibleTodos(state.todos, filter);
