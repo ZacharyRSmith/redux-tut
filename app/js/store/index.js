@@ -14,7 +14,12 @@ const configureStore = () => {
   const store = createStore(app, persistedState, applyMiddleware(...middlewares));
 
   store.subscribe(throttle(() => {
-    saveState({ todos: store.getState().todos });
+    const { todoLists, todos } = store.getState();
+
+    saveState({
+      todoLists,
+      todos
+    });
   }, 1000));
 
   return store;
