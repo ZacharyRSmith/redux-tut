@@ -19,7 +19,8 @@ export const addTodoList = (name) => ({
   name
 });
 
-export const toggleTodo = (id) => ({
+export const toggleTodo = (id, listId) => ({
   type: 'TOGGLE_TODO',
-  id
+  id,
+  listId
 });

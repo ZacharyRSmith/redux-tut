@@ -9,6 +9,7 @@ const todoList = (state, action) => {
         todos: []
       };
     case 'ADD_TODO':
+    case 'TOGGLE_TODO':
       if (state.id !== action.listId) {
         return state;
       }
@@ -30,6 +31,7 @@ const todoLists = (state = [], action) => {
         todoList(undefined, action)
       ];
     case 'ADD_TODO':
+    case 'TOGGLE_TODO':
       return state.map(l =>
         todoList(l, action)
       );

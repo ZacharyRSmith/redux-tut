@@ -20,6 +20,7 @@ const TodoListApp = ({ dispatch, id, name, params, todos }) => {
       />
       <TodoList
         filter={filter}
+        id={id}
         todos={todos}
       />
       <TodoFooter
