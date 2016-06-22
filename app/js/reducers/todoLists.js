@@ -6,7 +6,7 @@ const todoList = (state, action) => {
       return {
         id: action.id,
         name: action.name,
-        todos: []
+        todos: { allIds: [], byId: { } },
       };
     case 'ADD_TODO':
     case 'TOGGLE_TODO':
