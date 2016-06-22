@@ -52,17 +52,21 @@ const db = {
 const delay = (ms) =>
   new Promise(resolve => setTimeout(resolve, ms));
 
+const getTodosArray = (todos) =>
+  todos.allIds.map(id => todos.byId[id]);
+
 export const fetchTodos = (listId, filter) =>
   delay(500).then(() => {
     const list = db.todoLists.find(l => l.id === listId);
+    const todos = getTodosArray(list.todos);
 
     switch (filter) {
       case 'all':
-        return list.todos;
+        return todos;
       case 'active':
-        return list.todos.filter(t => !t.completed);
+        return todos.filter(t => !t.completed);
       case 'completed':
-        return list.todos.filter(t => t.completed);
+        return todos.filter(t => t.completed);
       default:
         throw new Error(`Filter not recognized: ${filter}`);
     }
