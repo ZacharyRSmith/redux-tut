@@ -4,6 +4,8 @@ import { Router, Route, hashHistory } from 'react-router';
 
 import TodoApp from './TodoApp.jsx';
 import { configureStore } from '../store';
+// for fake API
+import { fetchTodos } from '../api';
 
 const store = configureStore();
 
