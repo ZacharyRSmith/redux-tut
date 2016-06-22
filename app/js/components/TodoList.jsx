@@ -6,6 +6,9 @@ const TodoList = ({
   todos,
   onTodoClick
 }) => {
+  console.log('todos', todos)
+  todos = todos.all.map(id => todos.byId[id]);
+
   return ( todos.length
     ? <ul>
         {todos.map(todo =>

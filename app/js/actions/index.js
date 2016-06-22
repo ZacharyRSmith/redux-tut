@@ -14,6 +14,16 @@ export const addTodoList = (name) => ({
   name,
 });
 
+const receiveTodoLists = (response) => ({
+  type: 'RECEIVE_TODO_LISTS',
+  response
+});
+
+export const fetchTodoLists = () =>
+  api.fetchTodoLists().then(response =>
+    receiveTodoLists(response)
+  );
+
 const receiveTodos = (filter, response) => ({
   type: 'RECEIVE_TODOS',
   filter,

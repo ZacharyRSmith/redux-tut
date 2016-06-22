@@ -31,7 +31,11 @@ const db = {
     id: list1Id,
     name: 'list 1',
     todos: {
-      allIds: [todo1Id, todo2Id],
+      listByFilter: {
+        all: [todo1Id, todo2Id],
+        active: [todo1Id],
+        completed: [todo2Id],
+      },
       byId: {
         [todo1Id]: todo1,
         [todo2Id]: todo2,
@@ -41,7 +45,11 @@ const db = {
     id: list2Id,
     name: 'list 2',
     todos: {
-      allIds: [todo3Id],
+      listByFilter: {
+        all: [todo3Id],
+        active: [todo3Id],
+        completed: [],
+      },
       byId: {
         [todo3Id]: todo3,
       },
@@ -51,6 +59,9 @@ const db = {
 
 const delay = (ms) =>
   new Promise(resolve => setTimeout(resolve, ms));
+
+export const fetchTodoLists = () =>
+  delay(500).then(() => db.todoLists);
 
 const getTodosArray = (todos) =>
   todos.allIds.map(id => todos.byId[id]);

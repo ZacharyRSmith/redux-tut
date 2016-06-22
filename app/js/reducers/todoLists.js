@@ -10,10 +10,6 @@ const todoList = (state, action) => {
       };
     case 'ADD_TODO':
     case 'TOGGLE_TODO':
-      if (state.id !== action.listId) {
-        return state;
-      }
-
       return {
         ...state,
         todos: todos(state.todos, action)
@@ -25,6 +21,11 @@ const todoList = (state, action) => {
 
 const todoLists = (state = [], action) => {
   switch (action.type) {
+    case 'RECEIVE_TODO_LISTS':
+      return [
+        ...state,
+        ...action.response,
+      ];
     case 'ADD_TODO_LIST':
       return [
         ...state,
@@ -32,9 +33,10 @@ const todoLists = (state = [], action) => {
       ];
     case 'ADD_TODO':
     case 'TOGGLE_TODO':
-      return state.map(l =>
-        todoList(l, action)
-      );
+      return state.map(l => {
+        if (l.id === action.listId) return l;
+        return todoList(l, action);
+      });
     default:
       return state;
   }
