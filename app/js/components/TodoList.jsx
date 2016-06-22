@@ -1,31 +1,6 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
-import { toggleTodo } from '../actions';
-import { getVisibleTodos } from '../reducers/todoLists';
-
-const Todo = ({
-  onClick,
-  completed,
-  text
-  }) => (
-  <li
-    onClick={onClick}
-    style={{
-      textDecoration:
-        completed ?
-          'line-through' :
-          'none'
-    }}
-    className={
-        completed ?
-          'completed' :
-          ''
-    }
-    >
-    {text}
-  </li>
-);
+import Todo from './Todo.jsx';
 
 const TodoList = ({
   todos,
@@ -45,16 +20,4 @@ const TodoList = ({
   );
 };
 
-const mapStateToProps = (
-  state,
-  ownProps
-) => ({
-  todos: getVisibleTodos(
-    ownProps,
-    ownProps.filter
-  )
-});
-export default connect(
-  mapStateToProps,
-  { onTodoClick: toggleTodo }
-)(TodoList);
+export default TodoList;

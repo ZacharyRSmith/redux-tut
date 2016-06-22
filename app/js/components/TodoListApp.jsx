@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import AddTodo from './AddTodo.jsx';
-import TodoList from './TodoList.jsx';
+import VisibleTodoList from './VisibleTodoList.jsx';
 import { addTodo } from '../actions';
 
 // FIXME too many params!
@@ -16,7 +16,7 @@ const TodoListApp = ({ dispatch, filter, id, name, todos }) => {
           dispatch(addTodo(newTodoText, id));
         }}
       />
-      <TodoList
+      <VisibleTodoList
         filter={filter}
         id={id}
         todos={todos}
